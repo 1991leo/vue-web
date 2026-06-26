@@ -304,27 +304,27 @@ h6 {
 }
 
 .text-primary {
-  color: inherit;
+  color: var(--el-color-primary);
 }
 
 .text-success {
-  color: #1c84c6;
+  color: var(--el-color-success);
 }
 
 .text-info {
-  color: #23c6c8;
+  color: var(--el-color-info);
 }
 
 .text-warning {
-  color: #f8ac59;
+  color: var(--el-color-warning);
 }
 
 .text-danger {
-  color: #ed5565;
+  color: var(--el-color-danger);
 }
 
 .text-muted {
-  color: #888888;
+  color: var(--el-text-color-placeholder);
 }
 
 /* image */
