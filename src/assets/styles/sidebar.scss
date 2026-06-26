@@ -1,0 +1,411 @@
+@use './variables.module.scss' as *;
+
+#app {
+  .main-container {
+    height: 100%;
+    transition: margin-left 0.28s;
+    margin-left: 312px; /* 60px margin + 220px sidebar + 32px gap，使得右侧到左侧卡片有 32px 边距 */
+    position: relative;
+    background: transparent; /* 背景透明以暴露出 contentBack.png 全局底图 */
+  }
+
+  .sidebarHide {
+    margin-left: 0 !important;
+  }
+
+  .sidebar-container {
+    -webkit-transition: all 0.28s;
+    transition: all 0.28s;
+    width: 220px !important;
+    min-width: 220px !important; /* 保持固定宽度，不随页面收缩 */
+    background-color: #ffffff !important; /* 悬浮白色卡片 */
+    height: calc(100vh - 146px) !important; /* 100vh - 100px top - 46px bottom */
+    position: fixed;
+    font-size: 0;
+    top: 100px !important; /* 60px navbar + 40px margin */
+    bottom: 46px !important; /* 侧边菜单底部留 46px 的 footer 位置 */
+    left: 60px !important; /* 左侧菜单栏卡片左侧有 60px 的边距 */
+    z-index: 1001;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 21, 41, 0.06);
+    border-right: none !important;
+    // -webkit-box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    // box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
+
+    // reset element-ui css
+    .horizontal-collapse-transition {
+      transition:
+        0s width ease-in-out,
+        0s padding-left ease-in-out,
+        0s padding-right ease-in-out;
+    }
+
+    .scrollbar-wrapper {
+      overflow-x: hidden !important;
+    }
+
+    .el-scrollbar__bar.is-vertical {
+      right: 0;
+    }
+
+    .el-scrollbar {
+      height: 100%;
+    }
+
+    &.has-logo {
+      .el-scrollbar {
+        height: calc(100% - 50px);
+      }
+    }
+
+    .is-horizontal {
+      display: none;
+    }
+
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .svg-icon {
+      margin-right: 10px;
+    }
+
+    .el-menu {
+      border: none;
+      height: 100%;
+      width: 100% !important;
+      padding: 0 24px 24px 24px !important;
+      box-sizing: border-box;
+      background-color: transparent !important;
+
+      // 嵌套的子菜单容器本身不需要左右 padding，否则会导致二级菜单偏右
+      .el-menu {
+        padding: 0 !important;
+      }
+
+
+    }
+
+    .el-menu-item,
+    .menu-title {
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+
+    .el-menu-item .el-menu-tooltip__trigger {
+      display: inline-block !important;
+    }
+
+    // 一级目录标题：隐藏图标，使用浅色文字与二三级菜单区分。
+    .sidebar-item-level-1 > .el-sub-menu > .el-sub-menu__title,
+    .sidebar-item-level-1 > a > .el-menu-item.submenu-title-noDropdown {
+      color: #7a869a !important;
+      font-size: 14px;
+      font-weight: 500;
+      padding-left: 0 !important; /* 对齐至卡片内边距 24px */
+      background-color: transparent !important;
+      // margin: 8px 0 !important;
+      position: relative;
+
+      .el-sub-menu__icon-arrow,
+      .svg-icon {
+        display: none !important;
+      }
+
+      &:hover {
+        color: #7a869a !important; /* 悬浮颜色保持与默认一致，不展示 hover 高亮效果 */
+      }
+
+      &.is-active {
+        color: var(--el-color-primary) !important;
+        background-color: transparent !important;
+        font-weight: 600;
+      }
+    }
+
+    // 一级菜单不让折叠的包装容器样式
+    .sub-menu-title-wrapper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 0;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+
+    // 二三级菜单项和通用菜单项样式
+    .el-menu-item {
+      height: 30px;
+      line-height: 30px;
+      margin: 2px 0 !important; /* 使两个相邻菜单项文字的垂直间隙精确为 20px */
+      color: #172b4d !important; // 非一级菜单未激活时字体颜色设定为 #172B4D
+      background-color: transparent !important;
+
+      .svg-icon {
+        width: 14px;
+        height: 14px;
+        color: #7a869a !important;
+        fill: #7a869a !important;
+        transition: color 0.3s, fill 0.3s;
+      }
+
+      &:hover {
+        background-color: transparent !important;
+        color: var(--el-color-primary) !important;
+
+        .svg-icon {
+          color: var(--el-color-primary) !important;
+          fill: var(--el-color-primary) !important;
+        }
+      }
+
+      &.is-active {
+        background-color: transparent !important; // 仅文字高亮，无背景
+        color: var(--el-color-primary) !important;
+        font-weight: 600;
+
+        .svg-icon {
+          color: var(--el-color-primary) !important;
+          fill: var(--el-color-primary) !important;
+        }
+      }
+    }
+
+    // 二三级菜单标题基础样式。
+    .sidebar-item-level-2 > .el-sub-menu > .el-sub-menu__title,
+    .sidebar-item-level-3 > .el-sub-menu > .el-sub-menu__title {
+      height: 30px;
+      line-height: 30px;
+      margin: 2px 0 !important;
+      padding-left: 0 !important;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: transparent !important;
+
+      .svg-icon {
+        display: inline-flex !important;
+        width: 14px;
+        height: 14px;
+        margin-right: 10px;
+        color: #7a869a !important;
+        fill: #7a869a !important;
+        transition: color 0.3s, fill 0.3s;
+      }
+
+      &:hover {
+        color: var(--el-color-primary) !important;
+
+        .svg-icon {
+          color: var(--el-color-primary) !important;
+          fill: var(--el-color-primary) !important;
+        }
+      }
+    }
+
+    // 二级父菜单存在三级菜单时，不再使用深色强调。
+    .sidebar-item-level-2 > .el-sub-menu > .el-sub-menu__title,
+    .sidebar-item-level-2 > .el-sub-menu.is-active > .el-sub-menu__title {
+      color: #7a869a !important;
+      font-weight: 500;
+
+      .el-sub-menu__icon-arrow {
+        display: none !important; // 二级父菜单不展示展开箭头
+      }
+    }
+
+    .sidebar-item-level-3 > .el-sub-menu > .el-sub-menu__title {
+      color: #172b4d !important;
+    }
+
+    .sidebar-item-level-2 > a > .el-menu-item:not(.is-active),
+    .sidebar-item-level-3 > a > .el-menu-item:not(.is-active) {
+      color: #172b4d !important;
+    }
+
+    // 展开状态下（非折叠菜单）的一二级菜单缩进与图标布局
+    .el-menu:not(.el-menu--collapse) {
+      .el-menu-item {
+        padding-left: 0 !important; // 二级菜单靠左，距离边框正好是 24px
+        position: relative;
+
+        .svg-icon {
+          position: static;
+          margin-right: 10px;
+        }
+      }
+
+      & .sidebar-item-level-2 > .el-sub-menu > .el-sub-menu__title,
+      & .sidebar-item-level-2 > a > .el-menu-item {
+        padding-left: 0 !important; // 二级菜单对齐到卡片内边距 24px
+      }
+
+      & .sidebar-item-level-2 > .el-sub-menu > .el-sub-menu__title {
+        padding-left: 24px !important; // 二级父菜单隐藏图标后保留图标占位，与三级菜单左侧对齐
+      }
+
+      & .sidebar-item-level-3 > .el-sub-menu > .el-sub-menu__title,
+      & .sidebar-item-level-3 > a > .el-menu-item {
+        padding-left: 24px !important; // 三级菜单相对二级菜单右移 24px
+      }
+    }
+
+    // 激活的一级目录样式不进行文字高亮，以实现二级菜单高亮时一级不高亮的要求
+    .sidebar-item-level-1 > .el-sub-menu.is-active > .el-sub-menu__title {
+      color: #7a869a !important;
+      font-weight: 500;
+    }
+
+    & .nest-menu .el-sub-menu > .el-sub-menu__title,
+    & .el-sub-menu .el-menu-item {
+      min-width: unset !important;
+      width: 100% !important;
+      border-radius: var(--app-radius-md);
+      height: 30px;
+      line-height: 30px;
+      margin: 2px 0 !important;
+    }
+  }
+
+  // 收起菜单后的样式
+  .hideSidebar {
+    .sidebar-container {
+      width: 54px !important;
+      min-width: 54px !important; /* 折叠时也保持固定宽度，不随页面收缩 */
+    }
+
+    .main-container {
+      margin-left: 146px; /* 60px margin + 54px collapsed sidebar + 32px gap，折叠时也保持 32px 边距 */
+    }
+
+    .sub-menu-title-noDropdown {
+      padding: 0 !important;
+      position: relative;
+      // 选中状态的菜单
+      &.is-active {
+        background-color: rgba(0, 185, 107, 0.08) !important;
+        color: var(--menuActiveText) !important;
+      }
+
+      .el-tooltip {
+        padding: 0 !important;
+      }
+    }
+
+
+    & .el-sub-menu {
+      overflow: hidden;
+      border-radius: var(--app-radius-md);
+      .el-sub-menu__title.el-tooltip__trigger {
+        border-radius: var(--app-radius-md);
+        height: 40px;
+      }
+
+      // 选中状态的菜单
+      &.is-active .el-sub-menu__title.el-tooltip__trigger {
+        background-color: rgba(0, 185, 107, 0.08) !important;
+        color: var(--menuActiveText) !important;
+      }
+
+
+      & > .el-sub-menu__title {
+        padding: 0 !important;
+      }
+    }
+
+    .el-menu--collapse {
+      & > .el-sub-menu,
+      & > a {
+        border-bottom: none !important;
+        padding-bottom: 0 !important;
+        margin-bottom: 0 !important;
+      }
+
+      .is-active .svg-icon {
+        fill: var(--menuActiveText) !important;
+        color: var(--menuActiveText) !important;
+      }
+      .svg-icon {
+        display: flex;
+        margin: auto;
+        height: 100%;
+        // 这里设置width会跟随sidebar-container的transition 不符合预期
+      }
+      .el-sub-menu {
+        & > .el-sub-menu__title {
+          & > span {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+          & > i {
+            height: 0;
+            width: 0;
+            overflow: hidden;
+            visibility: hidden;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .el-menu--collapse .el-menu .el-sub-menu {
+    min-width: $base-sidebar-width !important;
+  }
+
+  // mobile responsive
+  .mobile {
+    .main-container {
+      margin-left: 0px;
+    }
+
+    .sidebar-container {
+      transition: transform 0.28s;
+      width: $base-sidebar-width !important;
+    }
+
+    &.hideSidebar {
+      .sidebar-container {
+        pointer-events: none;
+        transition-duration: 0.3s;
+        transform: translate3d(-$base-sidebar-width, 0, 0);
+      }
+    }
+  }
+
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}
+
+// when menu collapsed
+.el-menu--vertical {
+  & > .el-menu {
+    .svg-icon {
+      margin-right: 16px;
+    }
+  }
+}
+// 收起菜单后悬浮的菜单样式
+.el-popper.is-pure{
+  border-radius: var(--app-radius-md);
+  .el-menu--popup{
+    border-radius: var(--app-radius-md);
+  }
+  .el-menu-item{
+    border-radius: var(--app-radius-sm);
+  }
+}
