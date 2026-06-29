@@ -56,10 +56,13 @@ const routes = computed(() => usePermissionStore().getRoutes())
 const theme = computed(() => useSettingsStore().theme)
 const tagsIcon = computed(() => useSettingsStore().tagsIcon)
 
-watch(route, () => {
-	addTags()
-	moveToCurrentTag()
-})
+watch(
+	() => route.fullPath,
+	() => {
+		addTags()
+		moveToCurrentTag()
+	}
+)
 watch(visible, (value) => {
 	if (value) {
 		document.body.addEventListener("click", closeMenu)

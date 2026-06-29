@@ -10,7 +10,7 @@
       </div> -->
 			<router-view v-slot="{ Component, route }">
 				<transition :enter-active-class="animate" mode="out-in">
-					<keep-alive :include="tagsViewStore.cachedViews">
+					<keep-alive :include="cachedViewNames">
 						<component :is="Component" v-if="!route.meta.link" :key="route.path" />
 					</keep-alive>
 				</transition>
@@ -34,6 +34,15 @@ const settingsStore = useSettingsStore()
 const needTagsView = computed(() => settingsStore.tagsView)
 const fixedHeader = computed(() => settingsStore.fixedHeader)
 const layout = computed(() => settingsStore.navType)
+const cachedViewNames = computed(() => {
+	const cachedViews = tagsViewStore.cachedViews
+	const routeName = typeof route.name === "string" ? route.name : ""
+	if (!needTagsView.value || !routeName || route.meta.noCache || cachedViews.includes(routeName)) {
+		return cachedViews
+	}
+	// 首次进入菜单时，TagsView 会随后写入缓存；这里提前包含当前组件，避免 KeepAlive include 变更导致页面重建。
+	return [...cachedViews, routeName]
+})
 
 // 随机动画集合
 const animate = ref<string>("")
