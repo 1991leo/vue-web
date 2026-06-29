@@ -71,7 +71,7 @@
 				</el-form>
 			</div>
 
-			<div class="footer-copy">Copyright © 2026 湖北大数据集团有限公司 All Rights Reserved. v1.0</div>
+			<div class="footer-copy">{{ copyright }}</div>
 		</div>
 	</div>
 </template>
@@ -120,6 +120,7 @@ const loading = ref(false)
 const captchaEnabled = ref(false)
 const passwordVisible = ref(false)
 const redirect = ref<string>("/")
+const copyright = import.meta.env.VITE_APP_COPYRIGHT || `Copyright © ${new Date().getFullYear()} All Rights Reserved`
 
 watch(
 	() => router.currentRoute.value,

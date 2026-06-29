@@ -10,7 +10,7 @@ import { listPlatformInfo } from "@/api/system/platform"
 const year = new Date().getFullYear()
 const title = import.meta.env.VITE_APP_TITLE || "系统"
 const defaultFooterText = `Copyright © ${year} ${title} All Rights Reserved`
-const footerText = ref(defaultFooterText)
+const footerText = ref(import.meta.env.VITE_APP_COPYRIGHT || defaultFooterText)
 
 const loadPlatformFooter = async () => {
 	const res = await listPlatformInfo()

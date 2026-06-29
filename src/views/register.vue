@@ -79,7 +79,7 @@
 		</el-form>
 		<!--  底部  -->
 		<div class="el-register-footer">
-			<span>Copyright © 2026 湖北大数据集团有限公司 All Rights Reserved. v1.0</span>
+			<span>{{ copyright }}</span>
 		</div>
 	</div>
 </template>
@@ -93,6 +93,7 @@ import { useI18n } from "vue-i18n"
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 
 const title = import.meta.env.VITE_APP_TITLE
+const copyright = import.meta.env.VITE_APP_COPYRIGHT || `Copyright © ${new Date().getFullYear()} All Rights Reserved`
 const router = useRouter()
 
 const { t } = useI18n()
