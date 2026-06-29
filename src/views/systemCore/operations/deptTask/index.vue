@@ -233,7 +233,16 @@ const currentFormData = computed<DeptTaskFormData | null>(() => {
 		const matchedAssigneeValue = getMatchedAssigneeValue(task.assigneeId)
 		const matchedAssignee = userOptions.value.find((item) => item.value === matchedAssigneeValue)
 		return {
+			...createDeptTaskFormData(),
 			...task,
+			taskTitle: task.taskTitle || "",
+			taskDescription: task.taskDescription || "",
+			collaboratorNames: task.collaboratorNames || "",
+			taskCategory: task.taskCategory || "",
+			taskPlanType: task.taskPlanType || "",
+			taskPriority: task.taskPriority || "",
+			planStartTime: task.planStartTime || "",
+			planEndTime: task.planEndTime || "",
 			assigneeId: matchedAssigneeValue,
 			assigneeName: matchedAssignee ? matchedAssignee.label : task.assigneeName
 		}

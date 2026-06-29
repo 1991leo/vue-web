@@ -42,6 +42,7 @@
 
 <script setup lang="ts">
 import noDataImage from "@/assets/images/no_data.webp"
+import type { PropType } from "vue"
 import type { CalendarTask, DaySection } from "../config"
 
 interface DaySectionWithTasks extends DaySection {
@@ -54,7 +55,7 @@ defineProps({
 		default: () => []
 	},
 	getCategoryColor: {
-		type: Function as () => (category: string) => string,
+		type: Function as PropType<(category: string) => string>,
 		required: true
 	}
 })

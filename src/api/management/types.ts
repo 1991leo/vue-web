@@ -65,7 +65,7 @@ export interface DeptTaskRow {
 	id: string | number
 	taskTitle: string
 	taskDescription?: string | null
-	assigneeId?: number | null
+	assigneeId?: string | number | null
 	assigneeName?: string | null
 	collaboratorIds?: string | null
 	collaboratorNames?: string | null
@@ -106,7 +106,7 @@ export interface DeptTaskCreateData {
 	id?: string | number
 	taskTitle: string
 	taskDescription?: string
-	assigneeId?: number | null
+	assigneeId?: string | number | null
 	assigneeName?: string
 	collaboratorIds?: string
 	collaboratorNames?: string

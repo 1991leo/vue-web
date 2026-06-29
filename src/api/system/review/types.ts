@@ -6,6 +6,7 @@ export interface MapObject {
 export interface BusinessMattersListQuery {
 	projectName?: string
 	applicantEnterpriseIdName?: string
+	applicantEnterpriseName?: string
 	beginApplicationDate?: string
 	endApplicationDate?: string
 	status?: string | number
@@ -19,7 +20,7 @@ export interface BusinessMattersListQuery {
 export interface BizBusinessMattersApproveBo {
 	comment?: string
 	coSignDeptIdList?: number[]
-	id: number
+	id: number | string
 	result: number
 	[property: string]: any
 }
@@ -132,7 +133,7 @@ export interface RBizBusinessMattersVoResponse {
 }
 
 export interface BizBusinessMattersBo {
-	applicantEnterpriseId?: string
+	applicantEnterpriseId?: string | number
 	applicationDate?: string
 	applicationNo?: string
 	contractAmount?: number
@@ -146,7 +147,7 @@ export interface BizBusinessMattersBo {
 	createTime?: string
 	financialCalculation?: string
 	fundArrangement?: string
-	id?: number
+	id?: number | string
 	internalDecisionRecord?: string
 	keyword?: string
 	legalCompliance?: string

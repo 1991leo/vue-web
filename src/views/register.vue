@@ -157,7 +157,6 @@ const handleRegister = () => {
 					'<span style="color: red; ">' + t("register.registerSuccess", { username }) + "</font>",
 					"系统提示",
 					{
-						app: undefined,
 						dangerouslyUseHTMLString: true,
 						type: "success"
 					}

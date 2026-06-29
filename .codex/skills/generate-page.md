@@ -1,25 +1,26 @@
 ---
 name: generate-page
-description: Use this skill when generating or refactoring VUE-WEB project pages from screenshots, prototypes, interface documents, or existing page references. It focuses on current VUE-WEB visual style, Vue 3 UI, complete interaction flows, and normalized src/api/system calls for systemCore modules.
+description: Use this skill when generating or refactoring VUE-WEB project pages from screenshots, prototypes, interface documents, or existing page references. It focuses on current VUE-WEB visual style, Vue 3 UI, complete interaction flows, and normalized src/api/manage calls for manage business modules.
 ---
 
 # VUE-WEB 页面生成与风格统一
 
-用于根据页面截图、原型说明、接口文档和业务描述，在 VUE-WEB 中生成或改造 `src/views/systemCore` 业务页面，同时补齐规范的 `src/api/system` 接口调用与类型定义。
+用于根据页面截图、原型说明、接口文档和业务描述，在 VUE-WEB 中生成或改造 `src/views/manage` 业务页面，同时补齐规范的 `src/api/manage` 接口调用与类型定义。
 
 最重要原则：
 
 - **项目风格优先于原型视觉**：原型或原型图与当前系统风格不一致时，只提取原型的业务内容、字段、层级、流程和交互意图，不照搬原型的旧版配色、圆角、阴影、导航、卡片样式或布局外壳。
-- **页面必须落到现有范式**：列表、卡片、表单、详情、弹窗、看板、日历、工作台等页面，优先参照 `src/views/systemCore/collaboration` 与 `src/views/systemCore/operations` 已有页面和公共组件实现。
+- **页面必须落到新业务目录**：新增业务页面统一创建在 `src/views/manage`，新增业务 API 统一创建在 `src/api/manage`；`src/views/systemCore` 和 `src/api/system` 只用于平台基础能力。
+- **页面必须落到现有范式**：列表、卡片、表单、详情、弹窗、看板、日历、工作台等页面，优先复用公共组件；旧 `systemCore/operations`、`systemCore/cockpit`、`systemCore/collaboration` 只作为迁移前风格参考，后续会删除。
 - **复用公共组件**：优先使用 `HeaderTabs`、`PageTitle`、`SearchHeader`、`CommonDivider`、`CommonTable`、`TableList`、`Pagination`、`PriorityCard`、`FormPageLayout`、`DetailPageLayout`、`CommonTimeline` 等组件。
 - **复用公共能力**：权限使用 `src/directive/permission` 或 `@/utils/permission`，分页/loading/弹窗/CRUD 视图切换优先用 `src/hooks`，全局弹窗/下载/页签/缓存优先用 `src/plugins`，用户/权限/字典/设置状态优先用 `src/store`。
 - **交互闭环**：搜索、分页、重置、新建、编辑、详情、删除、返回、弹窗提交、状态切换、刷新和权限控制必须能串起来。
-- **接口规范**：页面只通过 API 层调用后端，接口和类型优先放在 `src/api/system/{moduleName}/index.ts` 与 `types.ts`。
+- **接口规范**：页面只通过 API 层调用后端，业务接口和类型优先放在 `src/api/manage/{moduleName}/index.ts` 与 `types.ts`。
 
 ## 触发场景
 
 - 用户提供页面截图、原型图、原型说明、字段表、接口文档、菜单名或业务说明，要求生成页面。
-- 用户要求页面参照 `collaboration`、`operations`、`coordinate`、`tracking`、`control` 等现有页面风格。
+- 用户要求页面参照 `collaboration`、`operations`、`cockpit`、`coordinate`、`tracking`、`control` 等旧页面风格，但新页面仍必须创建到 `src/views/manage`。
 - 用户要求把旧风格页面或外部原型改造成 VUE-WEB 当前风格。
 - 用户要求补齐页面对应 API、类型、字典、分页、弹窗、详情或业务操作链路。
 
@@ -30,15 +31,15 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 - `AGENTS.md`：项目协作、注释、权限、若依接口和命名规则。
 - `docs/公共组件使用说明文档.md`：公共组件 API 和视觉约束。
 - `docs/公共能力目录说明.md`：`components/directive/enums/hooks/plugins/router/store/utils` 的职责边界和复用规则。
-- `docs/主题切换操作手册.md`：主题变量、硬编码禁用项和样式引入约束。
-- `src/views/systemCore/collaboration/coordinate`：标准表格列表、协调事项创建和详情参考。
-- `src/views/systemCore/collaboration/tracking`：卡片列表、复杂详情、阶段推进、里程碑和跨模块联动参考。
-- `src/views/systemCore/collaboration/projects`、`review`：复杂业务拆分组件、配置文件和多视图参考。
-- `src/views/systemCore/operations/control`：状态 Tabs、任务卡片、重点任务 CRUD、详情时间线参考。
-- `src/views/systemCore/operations/deptTask`：`HeaderTabs` + `TableList` 的任务台表格参考。
-- `src/views/systemCore/operations/weekly`：运营工作板、顶部 banner、分段 tab 和全高滚动参考。
-- `src/views/systemCore/operations/calendar`：日历、侧边栏、任务详情和组合布局参考。
-- 本次会调用的 `src/api/system/**`、`types.ts`、相关 hooks 和工具函数。
+- `docs/主题切换操作手册.md`：主题 token、硬编码禁用项和样式引入约束。
+- 旧 `src/views/systemCore/collaboration/coordinate`：标准表格列表、协调事项创建和详情参考，仅作风格参考。
+- 旧 `src/views/systemCore/collaboration/tracking`：卡片列表、复杂详情、阶段推进、里程碑和跨模块联动参考，仅作风格参考。
+- 旧 `src/views/systemCore/collaboration/projects`、`review`：复杂业务拆分组件、配置文件和多视图参考，仅作风格参考。
+- 旧 `src/views/systemCore/operations/control`：状态 Tabs、任务卡片、重点任务 CRUD、详情时间线参考，仅作风格参考。
+- 旧 `src/views/systemCore/operations/deptTask`：`HeaderTabs` + `TableList` 的任务台表格参考，仅作风格参考。
+- 旧 `src/views/systemCore/operations/weekly`：运营工作板、顶部 banner、分段 tab 和全高滚动参考，仅作风格参考。
+- 旧 `src/views/systemCore/operations/calendar`：日历、侧边栏、任务详情和组合布局参考，仅作风格参考。
+- 本次会调用的 `src/api/manage/**`、`types.ts`、相关 hooks 和工具函数。
 
 ## 原型处理规则
 
@@ -61,7 +62,7 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 - 原型中的卡片内容可以保留，但卡片外观优先使用 `PriorityCard`、白色大卡片或当前页面已有卡片规范。
 - 原型中的状态色只作为语义参考，最终色值集中映射到状态 class，主题主色使用 CSS 变量。
 - 原型中的复杂流程保留业务步骤，但交互承载方式优先选择当前系统已有的 `HeaderTabs`、弹窗、详情页、右侧时间线或子组件。
-- 后续只修改主题色风格时，只调整 `src/settings.ts` 的 `theme` 和必要的主题变量消费点；页面布局风格、公共组件 API、卡片层级、列表顺序、表单栅格和详情分栏保持不变。
+- 后续只修改主题风格时，优先调整 `src/theme/index.ts` 的色系、圆角、阴影等 token；页面布局风格、公共组件 API、卡片层级、列表顺序、表单栅格和详情分栏保持不变。
 
 最终页面应该看起来像 VUE-WEB 当前页面，而不是像原型工具导出的独立页面。
 
@@ -100,7 +101,7 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 
 ### 状态 Tabs + 主卡片页
 
-适用于任务、统计状态筛选和运营管理页面，参考 `operations/control`、`operations/deptTask`、`operations/dashboard`：
+适用于任务、统计状态筛选和运营管理页面，可临时参考旧 `operations/control`、`operations/deptTask`、`operations/dashboard`：
 
 - 顶部 `HeaderTabs` 放在主卡片外，作为浅背景上的状态筛选。
 - 主内容用白色大卡片承载，卡片内部仍遵循标题、搜索、分割线、操作区、内容、分页。
@@ -117,7 +118,7 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 
 ### 表单页
 
-优先使用 `FormPageLayout`，参考 `operations/control/create.vue`：
+优先使用 `FormPageLayout`，可临时参考旧 `operations/control/create.vue`：
 
 - 标题和描述由 layout 承载，表单内容放默认插槽，底部操作放 `#actions`。
 - `el-form` 使用 `label-position="top"`。
@@ -127,7 +128,7 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 
 ### 详情页
 
-优先使用 `DetailPageLayout`，参考 `operations/control/detail.vue` 和 `collaboration/tracking/detail.vue`：
+优先使用 `DetailPageLayout`，可临时参考旧 `operations/control/detail.vue` 和 `collaboration/tracking/detail.vue`：
 
 - 头部包含返回按钮、标题、状态标签；状态样式用 `statusClass`。
 - 详情大卡片内部由业务自定义，常见为左右分栏：左侧基础信息、描述、业务动作；右侧时间线、日志、进度或辅助信息。
@@ -139,9 +140,9 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 适用于运营驾驶舱、周报、日历等非标准 CRUD：
 
 - 可以使用全高布局，但仍保持白色内容区、圆角、浅背景和紧凑信息密度。
-- 周报类页面参考 `operations/weekly`：顶部 summary banner、工具栏、分段 tab、内容板。
-- 日历类页面参考 `operations/calendar`：侧边栏 + 主日历视图 + 任务详情，保证内部滚动和固定高度。
-- Dashboard 参考 `operations/dashboard`：统计卡片、任务卡片和状态 Tabs 组合，不做营销式大 hero。
+- 周报类页面可临时参考旧 `operations/weekly`：顶部 summary banner、工具栏、分段 tab、内容板。
+- 日历类页面可临时参考旧 `operations/calendar`：侧边栏 + 主日历视图 + 任务详情，保证内部滚动和固定高度。
+- Dashboard 可临时参考旧 `operations/dashboard` 与 `cockpit`：统计卡片、任务卡片和状态 Tabs 组合，不做营销式大 hero。
 
 ## 现有页面参考
 
@@ -173,7 +174,7 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 - `PriorityCard` 任务卡片网格、优先级视觉、卡片悬浮操作。
 - 新建/编辑复用 `FormPageLayout`。
 - 详情复用 `DetailPageLayout`，右侧使用 `CommonTimeline`。
-- 标准 API 目录：`src/api/system/importantTask/index.ts` + `types.ts`。
+- 标准 API 目录：`src/api/manage/importantTask/index.ts` + `types.ts`。
 
 ### deptTask：部门任务
 
@@ -205,18 +206,18 @@ description: Use this skill when generating or refactoring VUE-WEB project pages
 优先按接口模块创建：
 
 ```text
-src/api/system/{moduleName}/
+src/api/manage/{moduleName}/
 ├── index.ts
 └── types.ts
 
-src/views/systemCore/{category}/{featureName}/
+src/views/manage/{category}/{featureName}/
 ├── index.vue
 ├── create.vue
 ├── detail.vue
 └── components/
 ```
 
-如果既有项目已有单文件 API（如 `src/api/system/coordination.ts`）或接口位于其他既有目录，新增代码应尊重现状；新模块优先使用目录式 API。
+如果既有项目已有单文件 API（如旧 `src/api/system/coordination.ts`）或接口位于其他既有目录，迁移旧页面时可以尊重现状；新业务模块必须使用 `src/api/manage/{moduleName}` 目录式 API。平台基础能力才继续使用 `src/api/system`。
 
 命名要求：
 
@@ -427,7 +428,7 @@ function mapDictOptions(dicts: DictDataOption[]): SelectOption[] {
 - 大白卡片通常 `background: #fff; border-radius: 20px; padding: 30px;`。
 - 小业务卡片通常 `border-radius: 8px` 到 `12px`。
 - 搜索、标题、分割线、操作区顺序跟现有页面一致，不随原型随意重排。
-- 主题主色使用 `var(--el-color-primary)`、`var(--el-color-primary-light-*)`、`rgba(var(--el-color-primary-rgb), n)`。
+- 主题主色使用 `var(--el-color-primary)`、`var(--el-color-primary-light-*)`、`rgba(var(--el-color-primary-rgb), n)`；中性色、圆角、阴影优先使用 `--app-*` 变量。
 - 禁止硬编码主题主色：`#409eff`、`#00b46e`、`rgba(64, 158, 255, ...)`。
 - 业务状态色允许使用明确语义色，但必须集中在状态 class 或映射中，不散落在模板行内样式。
 - 不做营销式 hero、大面积装饰渐变、漂浮装饰元素或与业务管理后台不匹配的视觉。

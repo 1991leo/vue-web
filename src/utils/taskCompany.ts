@@ -24,7 +24,7 @@ function getDeptList(response: any): DeptVO[] {
 
 function getTaskCompanyQuery(): DeptQuery {
 	// 公司选项统一取指定父级部门下一级部门。
-	return { parentId: taskCompanyParentId }
+	return { pageNum: 1, pageSize: 9999, parentId: taskCompanyParentId }
 }
 
 export async function getTaskCompanyDictOptions(): Promise<TaskCompanyDictOption[]> {

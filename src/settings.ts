@@ -1,5 +1,6 @@
 import { LanguageEnum } from "@/enums/LanguageEnum"
 import { NavTypeEnum } from "@/enums/NavTypeEnum"
+import { defaultThemeColor } from "@/theme"
 
 const setting: DefaultSettings = {
 	/**
@@ -12,7 +13,7 @@ const setting: DefaultSettings = {
 	 */
 	title: import.meta.env.VITE_APP_TITLE,
 
-	theme: "#00b46e",
+	theme: defaultThemeColor,
 
 	/**
 	 * 侧边栏主题 深色主题theme-dark，浅色主题theme-light

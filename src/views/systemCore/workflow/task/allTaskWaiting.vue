@@ -143,12 +143,12 @@
 
 <script setup lang="ts">
 import { pageByAllTaskWait, pageByAllTaskFinish, updateAssignee, urgeTask } from "@/api/workflow/task"
-import UserSelect from "@/components/UserSelect"
+import UserSelect from "@/components/UserSelect/index.vue"
 import { TaskQuery } from "@/api/workflow/task/types"
 import workflowCommon from "@/api/workflow/workflowCommon"
 import { RouterJumpVo } from "@/api/workflow/workflowCommon/types"
-import processMeddle from "@/components/Process/processMeddle"
-import messageType from "@/components/Process/MessageType"
+import processMeddle from "@/components/Process/processMeddle.vue"
+import messageType from "@/components/Process/MessageType.vue"
 import { UserVO } from "@/api/system/user/types"
 import { TabsPaneContext } from "element-plus"
 //选人组件

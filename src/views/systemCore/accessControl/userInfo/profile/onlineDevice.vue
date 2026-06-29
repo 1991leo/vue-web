@@ -38,8 +38,10 @@ import { parseTime, selectDictLabel } from "@/utils/ruoyi"
 import type { OnlineVO } from "@/api/monitor/online/types"
 
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
-const { sys_device_type } = toRefs<{ sys_device_type: DictDataOption[] }>(
-	proxy?.useDict("sys_device_type") ?? { sys_device_type: [] }
+const { sys_device_type } = toRefs(
+	(proxy?.useDict("sys_device_type") ?? { sys_device_type: [] }) as {
+		sys_device_type: DictDataOption[]
+	}
 )
 
 type OnlineDeviceVO = OnlineVO & {

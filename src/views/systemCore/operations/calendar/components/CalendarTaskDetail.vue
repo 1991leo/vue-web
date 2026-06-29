@@ -117,6 +117,7 @@ import { ArrowLeft } from "@element-plus/icons-vue"
 import { ElButton, ElIcon, ElProgress } from "element-plus"
 import dayjs from "dayjs"
 import { computed } from "vue"
+import type { PropType } from "vue"
 import type { CalendarTask } from "../config"
 
 const props = defineProps({
@@ -125,7 +126,7 @@ const props = defineProps({
 		required: true
 	},
 	getCategoryColor: {
-		type: Function as () => (category: string) => string,
+		type: Function as PropType<(category: string) => string>,
 		required: true
 	}
 })

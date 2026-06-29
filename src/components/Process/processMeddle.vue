@@ -88,7 +88,7 @@
 <script setup lang="ts">
 import { propTypes } from "@/utils/propTypes"
 import { FlowTaskVO, TaskOperationBo } from "@/api/workflow/task/types"
-import UserSelect from "@/components/UserSelect"
+import UserSelect from "@/components/UserSelect/index.vue"
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 import { getTask, taskOperation, currentTaskAllUser, terminationTask } from "@/api/workflow/task"
 const props = defineProps({
@@ -120,6 +120,8 @@ const task = ref<FlowTaskVO>({
 	nodeCode: undefined,
 	nodeName: undefined,
 	flowCode: undefined,
+	businessCode: undefined,
+	businessTitle: undefined,
 	flowStatus: undefined,
 	formCustom: undefined,
 	formPath: undefined,

@@ -66,7 +66,7 @@
 							v-model="formData[item.key]"
 							:data="item.options"
 							:props="item.props || {}"
-							:current-node-key="item.value"
+							:current-node-key="getTreeCurrentNodeKey(item.value)"
 							:placeholder="item.placeholder"
 							:style="{ width: item.width }"
 							:default-expand-all="true"
@@ -192,7 +192,8 @@ interface FormItem {
 	preSelectOptions?: { value: string | number; label: string }[]
 	isPosition?: string
 	preModel?: string
-	value?: string
+	value?: string | number | string[] | null
+	clearable?: boolean
 	disabled?: boolean
 	filterable?: boolean
 	props?: Record<string, any>
@@ -355,6 +356,10 @@ const checkNeedExpand = () => {
 	needExpand.value = Array.from(items).some(
 		(el, idx) => idx > 0 && (el as HTMLElement).offsetTop > firstRowOffsetTop.value
 	)
+}
+
+const getTreeCurrentNodeKey = (value: FormItem["value"]) => {
+	return Array.isArray(value) ? value[0] : value
 }
 
 const formatDateTime = (date: Date, pattern: string) => {

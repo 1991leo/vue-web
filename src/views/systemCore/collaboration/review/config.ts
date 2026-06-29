@@ -43,12 +43,14 @@ export interface ReviewTimelineItem {
 
 export interface ReviewTableColumn {
 	prop?: string
+	dataIndex?: string
 	label: string
 	minWidth?: string | number
 	width?: string | number
 	slotName?: string
 	showOverflowTooltip?: boolean
 	fixed?: boolean | "left" | "right"
+	showStatusColor?: boolean
 }
 
 export interface ReviewSearchItem {
@@ -101,15 +103,15 @@ export const reviewBusinessTypeOptions = [
 export const operatorEditableStatusNames = ["草稿", "材料确认不通过", "会签驳回", "领导驳回"] as const
 export const operatorEditableStatusCodes = [0, 2, 4, 6] as const
 
-export const reviewTableColumns = [
-	{ label: "申请单号", dataIndex: "applicationNo" },
-	{ label: "项目名称", dataIndex: "projectName", slotName: "projectName" },
-	{ label: "申请单位", dataIndex: "applicantEnterpriseIdName" },
-	{ label: "事项类型", dataIndex: "matterTypeName" },
-	{ label: "当前状态", dataIndex: "statusName", showStatusColor: true },
-	{ label: "流程实例ID", dataIndex: "processInstanceId" },
-	{ label: "更新时间", dataIndex: "updateTime" },
-	{ label: "操作", dataIndex: "operation", fixed: "right", slotName: "operation" }
+export const reviewTableColumns: ReviewTableColumn[] = [
+	{ label: "申请单号", prop: "applicationNo" },
+	{ label: "项目名称", prop: "projectName", slotName: "projectName" },
+	{ label: "申请单位", prop: "applicantEnterpriseIdName" },
+	{ label: "事项类型", prop: "matterTypeName" },
+	{ label: "当前状态", prop: "statusName", showStatusColor: true },
+	{ label: "流程实例ID", prop: "processInstanceId" },
+	{ label: "更新时间", prop: "updateTime" },
+	{ label: "操作", prop: "operation", fixed: "right", slotName: "operation" }
 ]
 
 export const createReviewSearchForm = (): ReviewSearchForm => ({
@@ -119,7 +121,7 @@ export const createReviewSearchForm = (): ReviewSearchForm => ({
 	status: null
 })
 
-export const createReviewSearchItems = () => [
+export const createReviewSearchItems = (): ReviewSearchItem[] => [
 	{
 		key: "status",
 		label: "状态",
@@ -158,12 +160,12 @@ export const createReviewSearchItems = () => [
 ]
 
 export const buildReviewSearchItemOptions = (
-	searchItems: Array<{ key: string; options?: unknown[] }>,
-	optionsMap: Record<string, unknown[]>
+	searchItems: ReviewSearchItem[],
+	optionsMap: Record<string, ReviewSearchItem["options"]>
 ) => {
 	searchItems.forEach((item) => {
 		if (Object.prototype.hasOwnProperty.call(optionsMap, item.key)) {
-			item.options = [...optionsMap[item.key]]
+			item.options = [...(optionsMap[item.key] || [])]
 		}
 	})
 }

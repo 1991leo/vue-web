@@ -463,7 +463,7 @@ const handleSelectionChange = (selection: any) => {
 const getPageList = async () => {
 	const query = proxy.$route.query
 	if (query.activeName) {
-		activeName.value = query.activeName
+		activeName.value = Array.isArray(query.activeName) ? query.activeName[0] || "0" : String(query.activeName)
 		proxy.$route.query.activeName = ""
 	}
 	if (activeName.value === "0") {
@@ -576,7 +576,7 @@ const design = async (row: FlowDefinitionVo) => {
 		path: `/systemCore/workflow/design/index`,
 		query: {
 			definitionId: row.id,
-			disabled: false,
+			disabled: "false",
 			activeName: activeName.value
 		}
 	})
@@ -591,7 +591,7 @@ const designView = async (row: FlowDefinitionVo) => {
 		path: `/systemCore/workflow/design/index`,
 		query: {
 			definitionId: row.id,
-			disabled: true,
+			disabled: "true",
 			activeName: activeName.value
 		}
 	})
@@ -607,7 +607,7 @@ const reset = () => {
 const handleAdd = async () => {
 	reset()
 	if (queryParams.value.category != "") {
-		form.value.category = queryParams.value.category
+		form.value.category = String(queryParams.value.category)
 	}
 	form.value.modelValue = "CLASSICS"
 	form.value.formCustom = "N"
@@ -635,7 +635,7 @@ const handleSubmit = async () => {
 	defFormRef.value.validate(async (valid: boolean) => {
 		if (valid) {
 			loading.value = true
-			const ext = {}
+			const ext: { autoPass?: boolean } = {}
 			ext.autoPass = autoPass.value
 			form.value.ext = JSON.stringify(ext)
 			if (form.value.id) {

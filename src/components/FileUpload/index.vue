@@ -92,7 +92,7 @@ watch(
 			let list: any[] = []
 			if (Array.isArray(val)) {
 				list = val
-			} else {
+			} else if (typeof val === "string" || typeof val === "number") {
 				const res = await listByIds(val)
 				list = res.data.map((oss) => {
 					return {
@@ -101,6 +101,9 @@ watch(
 						ossId: oss.ossId
 					}
 				})
+			} else {
+				// modelValue 允许传入已解析文件对象，避免把对象误当作 OSS id 请求。
+				list = [val]
 			}
 			// 然后将数组转为对象数组
 			fileList.value = list.map((item) => {

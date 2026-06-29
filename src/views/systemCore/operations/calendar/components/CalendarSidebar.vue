@@ -48,6 +48,7 @@ import type { CalendarTask } from "../config"
 import { ElIcon, ElInput } from "element-plus"
 import { Search } from "@element-plus/icons-vue"
 import { onBeforeUnmount, ref, watch } from "vue"
+import type { PropType } from "vue"
 
 interface SidebarCategoryItem {
 	label: string
@@ -74,7 +75,7 @@ const props = defineProps({
 		default: () => []
 	},
 	getCategoryColor: {
-		type: Function as () => (category: string) => string,
+		type: Function as PropType<(category: string) => string>,
 		required: true
 	}
 })

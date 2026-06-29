@@ -67,7 +67,7 @@
 									plain
 									icon="Delete"
 									:disabled="multiple"
-									@click="handleDelete"
+									@click="() => handleDelete()"
 									>删除</el-button
 								>
 							</el-col>
@@ -290,7 +290,7 @@ import { RouterJumpVo } from "@/api/workflow/workflowCommon/types"
 import VueJsonPretty from "vue-json-pretty"
 import "vue-json-pretty/lib/styles.css"
 import UserSelect from "@/components/UserSelect/index.vue"
-import { ElForm, FormInstance } from "element-plus"
+import { ElForm, FormInstance, TabsPaneContext } from "element-plus"
 //审批记录组件
 const { proxy } = getCurrentInstance() as ComponentInternalInstance
 const { wf_business_status } = toRefs<any>(proxy?.useDict("wf_business_status"))
@@ -340,8 +340,8 @@ const processDefinitionDialog = reactive<DialogOption>({
 })
 
 type CategoryOption = {
-	id: string
-	categoryName: string
+	id: string | number
+	label: string
 	children?: CategoryOption[]
 }
 
@@ -438,8 +438,8 @@ const getProcessInstanceFinishList = () => {
 }
 
 /** 删除按钮操作 */
-const handleDelete = async (row: FlowInstanceVO) => {
-	const instanceIdList = row.id || instanceIds.value
+const handleDelete = async (row?: FlowInstanceVO) => {
+	const instanceIdList = row?.id || instanceIds.value
 	await proxy?.$modal.confirm("是否确认删除？")
 	loading.value = true
 	if ("running" === tab.value) {
@@ -451,7 +451,7 @@ const handleDelete = async (row: FlowInstanceVO) => {
 	}
 	proxy?.$modal.msgSuccess("删除成功")
 }
-const changeTab = async (data: string) => {
+const changeTab = async (data: TabsPaneContext) => {
 	processInstanceList.value = []
 	queryParams.value.pageNum = 1
 	if ("running" === data.paneName) {

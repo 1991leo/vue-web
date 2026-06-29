@@ -41,7 +41,7 @@
 					placeholder="请选择"
 					filterable
 					:loading="projectLoading || taskLoading"
-					:disabled="createForm.relatedType === 'not_related' || createForm.relatedType === '不关联'"
+					:disabled="createForm.relatedType === '不关联'"
 				>
 					<el-option v-if="createForm.relatedType === '不关联'" label="不选择" value="不选择" />
 					<el-option v-for="item in relatedOptions" :key="item.key" :label="item.label" :value="item.value" />

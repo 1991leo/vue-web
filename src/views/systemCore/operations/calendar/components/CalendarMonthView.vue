@@ -38,6 +38,7 @@
 </template>
 
 <script setup lang="ts">
+import type { PropType } from "vue"
 import type { CalendarCellItem, CalendarTask } from "../config"
 
 const props = defineProps({
@@ -50,7 +51,7 @@ const props = defineProps({
 		required: true
 	},
 	getCategoryColor: {
-		type: Function as () => (category: string) => string,
+		type: Function as PropType<(category: string) => string>,
 		required: true
 	}
 })

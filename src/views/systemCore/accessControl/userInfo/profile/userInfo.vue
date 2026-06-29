@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import { updateUserProfile } from "@/api/system/user"
-import type { UserVO } from "@/api/system/user/types"
+import type { UserForm, UserVO } from "@/api/system/user/types"
 
 const props = defineProps<{ user: Partial<UserVO> }>()
 const userForm = computed<Partial<UserVO>>(() => props.user)
@@ -58,7 +58,22 @@ const rules = ref<ElFormRules>(rule)
 const submit = () => {
 	userRef.value?.validate(async (valid: boolean) => {
 		if (valid) {
-			await updateUserProfile(props.user)
+			// 个人资料接口只消费基础字段，避免把缺失 password 的 UserVO 直接传给完整用户表单。
+			const submitData: UserForm = {
+				userId: props.user.userId as string,
+				deptId: props.user.deptId,
+				userName: props.user.userName || "",
+				nickName: props.user.nickName,
+				password: "",
+				phonenumber: props.user.phonenumber,
+				email: props.user.email,
+				sex: props.user.sex,
+				status: props.user.status || "0",
+				remark: props.user.remark,
+				postIds: [],
+				roleIds: []
+			}
+			await updateUserProfile(submitData)
 			proxy?.$modal.msgSuccess("修改成功")
 		}
 	})

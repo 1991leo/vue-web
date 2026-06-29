@@ -1,5 +1,28 @@
 import type { DeptTaskStatisticsData } from "@/api/management/types"
 
+export interface DeptTaskTableColumn {
+	prop?: string
+	label: string
+	minWidth?: string | number
+	width?: string | number
+	slotName?: string
+	showOverflowTooltip?: boolean
+	fixed?: boolean | "left" | "right"
+	showStatusPlanBColor?: boolean
+}
+
+export interface DeptTaskSearchItem {
+	key: keyof DeptTaskSearchForm
+	label: string
+	type: string
+	placeholder: string
+	width: string
+	options?: Array<{ label: string; value: string | number }>
+	value?: string | number | string[] | null
+	valueFormat?: string
+	elementAttrs?: Record<string, unknown>
+}
+
 export interface DeptTaskFormData {
 	id?: string | number
 	taskTitle: string
@@ -44,48 +67,48 @@ export const statusTabs: DeptTaskStatusTab[] = [
 	{ key: "3", label: "延期" }
 ]
 
-export const deptTaskTableColumns = [
+export const deptTaskTableColumns: DeptTaskTableColumn[] = [
 	{
 		label: "任务详情",
-		dataIndex: "taskTitle",
+		prop: "taskTitle",
 
 		slotName: "taskInfo"
 	},
 	{
 		label: "优先级",
-		dataIndex: "taskPriorityName",
+		prop: "taskPriorityName",
 
 		slotName: "priority"
 	},
 	{
 		label: "负责人",
-		dataIndex: "assigneeName",
+		prop: "assigneeName",
 
 		slotName: "assignee"
 	},
 	{
 		label: "协助人",
-		dataIndex: "collaboratorNames",
+		prop: "collaboratorNames",
 		slotName: "helpers"
 	},
 	{
 		label: "开始日期",
-		dataIndex: "planStartTime"
+		prop: "planStartTime"
 		// slotName: 'planStartTime'
 	},
 	{
 		label: "截止日期",
-		dataIndex: "planEndTime"
+		prop: "planEndTime"
 		// slotName: 'planEndTime'
 	},
 	{
 		label: "状态",
-		dataIndex: "taskStatusName",
+		prop: "taskStatusName",
 		showStatusPlanBColor: true
 	},
 	{
 		label: "操作",
-		dataIndex: "operation",
+		prop: "operation",
 
 		fixed: "right",
 		slotName: "operation"
@@ -124,7 +147,7 @@ export const createDeptTaskStatisticsData = (): DeptTaskStatisticsData => ({
 	exceptionCount: 0
 })
 
-export const createDeptTaskSearchItems = () => [
+export const createDeptTaskSearchItems = (): DeptTaskSearchItem[] => [
 	{
 		key: "assigneeId",
 		label: "负责人",
@@ -178,12 +201,12 @@ export const getDeptTaskStatusCount = (statistics: DeptTaskStatisticsData, statu
 }
 
 export const buildDeptTaskSearchItemOptions = (
-	searchItems: Array<{ key: string; options?: unknown[] }>,
-	optionsMap: Record<string, unknown[]>
+	searchItems: DeptTaskSearchItem[],
+	optionsMap: Partial<Record<keyof DeptTaskSearchForm, Array<{ label: string; value: string | number }>>>
 ) => {
 	searchItems.forEach((item) => {
 		if (Object.prototype.hasOwnProperty.call(optionsMap, item.key)) {
-			item.options = [...optionsMap[item.key]]
+			item.options = [...(optionsMap[item.key] || [])]
 		}
 	})
 }

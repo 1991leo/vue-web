@@ -1,5 +1,4 @@
 import request from "@/utils/request"
-import { AxiosPromise } from "axios"
 import type {
 	DeptTaskCreateData,
 	DeptTaskDetailResult,
@@ -10,7 +9,7 @@ import type {
 } from "./types"
 
 // 查询部门任务信息列表
-export function getDeptTaskList(query: DeptTaskListQuery): AxiosPromise<DeptTaskListResult> {
+export function getDeptTaskList(query: DeptTaskListQuery): Promise<DeptTaskListResult> {
 	return request({
 		url: "/base/deptTask/list",
 		method: "get",
@@ -19,7 +18,7 @@ export function getDeptTaskList(query: DeptTaskListQuery): AxiosPromise<DeptTask
 }
 
 // 获取部门任务统计信息
-export function getDeptTaskStatistics(): AxiosPromise<DeptTaskStatisticsResult> {
+export function getDeptTaskStatistics(): Promise<DeptTaskStatisticsResult> {
 	return request({
 		url: "/base/deptTask/statistics",
 		method: "get"
@@ -27,7 +26,7 @@ export function getDeptTaskStatistics(): AxiosPromise<DeptTaskStatisticsResult> 
 }
 
 // 获取部门任务详情
-export function getDeptTaskDetail(id: string | number): AxiosPromise<DeptTaskDetailResult> {
+export function getDeptTaskDetail(id: string | number): Promise<DeptTaskDetailResult> {
 	return request({
 		url: "/base/deptTask/" + id,
 		method: "get"
@@ -62,7 +61,7 @@ export function deleteDeptTask(ids: string | number | Array<string | number>) {
 }
 
 // 获取近两周周报（本周+下周）
-export function getWeeklyReportTwoWeeks(): AxiosPromise<WeeklyReportResult> {
+export function getWeeklyReportTwoWeeks(): Promise<WeeklyReportResult> {
 	return request({
 		url: "/base/weeklyReport/twoWeeks",
 		method: "get"
@@ -70,7 +69,7 @@ export function getWeeklyReportTwoWeeks(): AxiosPromise<WeeklyReportResult> {
 }
 
 // 获取当周周报
-export function getWeeklyReportCurrent(): AxiosPromise<WeeklyReportResult> {
+export function getWeeklyReportCurrent(): Promise<WeeklyReportResult> {
 	return request({
 		url: "/base/weeklyReport/current",
 		method: "get"

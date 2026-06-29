@@ -18,10 +18,11 @@
 </template>
 
 <script setup lang="ts">
-import SidebarItem from "../Sidebar/SidebarItem"
+import SidebarItem from "../Sidebar/SidebarItem.vue"
 import { useAppStore } from "@/store/modules/app"
 import { useSettingsStore } from "@/store/modules/settings"
 import { usePermissionStore } from "@/store/modules/permission"
+import type { RouteRecordRaw } from "vue-router"
 
 const route = useRoute()
 const appStore = useAppStore()
@@ -40,8 +41,8 @@ const activeMenu = computed(() => {
 })
 
 const visibleNumber = ref(5)
-const topMenus = computed(() => {
-	return permissionStore.sidebarRouters.filter((f) => !f.hidden).slice(0, visibleNumber.value)
+const topMenus = computed<RouteRecordRaw[]>(() => {
+	return permissionStore.sidebarRouters.filter((f) => !f.hidden).slice(0, visibleNumber.value) as RouteRecordRaw[]
 })
 const moreRoutes = computed(() => {
 	return permissionStore.sidebarRouters
@@ -53,7 +54,7 @@ function setVisibleNumber() {
 	if (width >= 1000) {
 		width -= 500
 	}
-	visibleNumber.value = parseInt(width / 3 / 85)
+	visibleNumber.value = Math.floor(width / 3 / 85)
 }
 
 onMounted(() => {

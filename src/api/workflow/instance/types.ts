@@ -5,7 +5,7 @@ export interface FlowInstanceQuery extends PageQuery {
 	nodeName?: string
 	flowCode?: string
 	flowName?: string
-	createByIds?: string[] | number[]
+	createByIds?: Array<string | number>
 	businessId?: string
 }
 

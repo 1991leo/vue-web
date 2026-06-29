@@ -63,10 +63,8 @@ const findFirstMenuPath = (routes: RouteRecordRaw[], basePath = ""): string | nu
 const createReplaceRoute = (to: RouteLocationNormalized): RouteLocationRaw => ({
 	path: to.path,
 	replace: true,
-	params: to.params,
 	query: to.query,
-	hash: to.hash,
-	name: to.name as string
+	hash: to.hash
 })
 
 router.beforeEach(async (to) => {

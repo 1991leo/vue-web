@@ -1234,7 +1234,7 @@ watch(
 			const year = dayjs(period).year()
 			try {
 				const res = await getTotalProfit({ year, deptId })
-				if (res.data !== null && res.data !== undefined && res.data !== "") {
+				if (res.data !== null && res.data !== undefined && String(res.data) !== "") {
 					formData.annualTargetProfit = Number(res.data)
 				} else {
 					formData.annualTargetProfit = ""

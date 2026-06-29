@@ -394,7 +394,7 @@ async function handleExport() {
 	}
 }
 
-const buildApprovePayload = (payload: Omit<BizBusinessMattersApproveBo, "id">): BizBusinessMattersApproveBo | null => {
+const buildApprovePayload = (payload: ReviewApprovePayload): BizBusinessMattersApproveBo | null => {
 	const id = currentDetail.value?.id
 	// if (typeof id !== 'number') {
 	//   ElMessage.warning('未找到可处理的经营事项');
