@@ -4,7 +4,6 @@
 	"description": "vite",
 	"author": "leo",
 	"type": "module",
-	"packageManager": "pnpm@10.25.0",
 	"scripts": {
 		"dev": "vite --port 28000 --host 0.0.0.0",
 		"build:prod": "vite build --mode production",
